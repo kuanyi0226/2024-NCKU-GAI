@@ -11,17 +11,22 @@ weather_data['Precp'] = weather_data['Precp'].replace("T",0).astype(float)
 fig, ax = plt.subplots(2,1, figsize=(9,6))
 
 # Plot Temperature
-ax[0].plot(weather_data['Temperature'], marker='o')
+ax[0].plot(weather_data['ObsTime'],weather_data['Temperature'], marker='o')
+ax[0].set_xlim(1,None)
 ax[0].set_xlabel('Date')
 ax[0].set_ylabel('Temperature')
 ax[0].set_title('Temperature in August, 2022')
+ax[0].legend(loc='upper left',labels=['Temperature(°C)'])
 ax[0].grid(True)
 
 # Plot Precp
-ax[1].plot(weather_data['Precp'], marker='x')
+ax[1].plot(weather_data['ObsTime'],weather_data['Precp'], marker='x')
+ax[1].set_xlim(1,None)
+ax[1].set_ylim(None,120)
 ax[1].set_xlabel('Date')
 ax[1].set_ylabel('Precp')
 ax[1].set_title('Precipitation in August, 2022')
+ax[1].legend(loc='upper left',labels=['Precp(mm)'])
 ax[1].grid(True)
 
 plt.tight_layout()
