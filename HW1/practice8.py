@@ -11,8 +11,8 @@ import sklearn
 from sklearn.impute import SimpleImputer          
 # 匯入 Label Encoder
 from sklearn.preprocessing import LabelEncoder    
-# 匯入決策樹模型
-from sklearn.tree import DecisionTreeClassifier   
+# 匯入模型
+from sklearn.ensemble import RandomForestClassifier
 # 匯入準確度計算工具
 from sklearn.metrics import accuracy_score     
 # 匯入 train_test_split 工具
@@ -63,21 +63,20 @@ for target in encode_targets:
 # 分割 train and test sets，random_state 固定為 1012
 train_x, test_x, train_y, test_y = train_test_split(df_x, df_y, train_size=0.8, random_state=1012)
 
-# 創造決策樹模型
-model = DecisionTreeClassifier(random_state=1012,max_leaf_nodes=11,max_depth= 7, criterion='gini') 
-# 訓練決策樹模型
-model.fit(train_x, train_y)                       
+# 1. Random Forest
+Randomforest = RandomForestClassifier(random_state=1012,n_estimators = 15, criterion = 'gini',max_leaf_nodes=50,max_depth= 12)
+Randomforest.fit(train_x, train_y)                       
+pred_train = Randomforest.predict(train_x)    
 
-# 確認模型是否訓練成功
-pred_train = model.predict(train_x)                   
 # 計算準確度
 train_acc = accuracy_score(train_y, pred_train)             
 
 # 輸出準確度
+print('(1) Random Forest ')
 print('train accuracy: {}'.format(train_acc)) 
 
 # 確認模型是否訓練成功
-pred_test = model.predict(test_x)                   
+pred_test = Randomforest.predict(test_x)                   
 # 計算準確度
 test_acc = accuracy_score(test_y, pred_test)             
 
@@ -85,4 +84,4 @@ test_acc = accuracy_score(test_y, pred_test)
 print('test accuracy: {}'.format(test_acc)) 
 
 # save the model
-pickle.dump(model, open('./models/Titanic_DecisionTree.pickle', 'wb'))
+pickle.dump(Randomforest, open('./models/Titanic_RandomForest.pickle', 'wb'))
