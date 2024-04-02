@@ -11,7 +11,7 @@ x = np.ones((d_in, 1))
 # 模擬神經網路權重
 W = np.random.rand(d_out, d_in) * 10 - 5 
 print('模擬神經網路輸入:')
-print(W)
+print(x)
 # 模擬神經網路偏差值
 b = np.random.rand(d_out, 1) * 10 - 5  
 # todo
